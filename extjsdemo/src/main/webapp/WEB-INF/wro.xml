@@ -1,0 +1,7 @@
+<groups xmlns="http://www.isdc.ro/wro">
+
+	<group name="wcfe.min">
+		<js>/resources/js/**.js</js>
+	</group>
+
+</groups>
