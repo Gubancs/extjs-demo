@@ -1,3 +1,21 @@
+/**
+ * Client form panel hungarian translation
+ */
+Ext.override(Wcfe.form.ClientFormPanel, {
+	cityLabel : "Város",
+	nameLabel : "Név",
+	birthDateLabel : "Születési dátum",
+	resetText : "Törlés",
+	saveText : "Mentés",
+	title : 'Ügyfelek keresése'
+});
+/**
+ * NameField hungarian translation
+ */
+Ext.override(Wcfe.field.NameField, {
+	firstNameText : "Keresztnév",
+	lastNameText : "Vezetéknév",
+});
 
 /**
  * Temporaly solution

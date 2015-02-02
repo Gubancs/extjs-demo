@@ -3,10 +3,16 @@ Ext.ns("Wcfe.form");
 Wcfe.form.ClientFormPanel = Ext.extend(Wcfe.form.AbstractFormPanel, {
 
 	cityLabel : "City",
+	
 	nameLabel : "Name",
+	
 	birthDateLabel : "Birthdate",
+	
 	resetText: "Reset",
+	
 	saveText : "Save",
+	
+	title : 'Search clients',
 	
 	/**
 	 * The state id of client form
@@ -48,5 +54,6 @@ Wcfe.form.ClientFormPanel = Ext.extend(Wcfe.form.AbstractFormPanel, {
 	},
 
 });
+
 
 Ext.reg("clientform", Wcfe.form.ClientFormPanel);

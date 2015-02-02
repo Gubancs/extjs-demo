@@ -12,6 +12,7 @@ Wcfe.form.AbstractFormPanel = Ext.extend(Ext.form.FormPanel, {
 	 */
 	border : false,
 	
+	
 	/**
 	 * Init state events
 	 */

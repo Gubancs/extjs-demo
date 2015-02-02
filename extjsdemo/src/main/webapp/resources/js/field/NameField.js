@@ -6,7 +6,7 @@ Wcfe.field.NameField = Ext.extend(Ext.form.CompositeField, {
 	 * Default empty text to firstName field
 	 */
 	firstNameText : "Firstname",
-	
+
 	/**
 	 * Default empty text to lastName field
 	 */
@@ -26,12 +26,12 @@ Wcfe.field.NameField = Ext.extend(Ext.form.CompositeField, {
 	createItems : function() {
 		var items = [ {
 			xtype : XType.textfield,
-			emptyText : this.firstNameText,
-			name : 'name.firstName'
-		}, {
-			xtype : XType.textfield,
 			emptyText : this.lastNameText,
 			name : 'name.lastName'
+		}, {
+			xtype : XType.textfield,
+			emptyText : this.firstNameText,
+			name : 'name.firstName'
 		} ];
 		return items;
 	}

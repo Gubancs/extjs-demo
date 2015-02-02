@@ -90,7 +90,6 @@ Wcfe.App = function() {
 	
 		return Ext.create({
 			region : 'center',
-			title : 'Ügyfél keresés',
 			items : [ clientForm ]
 		}, XType.panel);
 	}
