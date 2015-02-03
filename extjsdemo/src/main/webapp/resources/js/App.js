@@ -54,16 +54,16 @@ Wcfe.App = function() {
 
 		createViewPort();
 	}
-	
-	function initStateProvider(){
-		var stateProvider  = null;
-		if(Wcfe.supportsLocalStorage()){
+
+	function initStateProvider() {
+		var stateProvider = null;
+		if (Wcfe.supportsLocalStorage()) {
 			stateProvider = new Wcfe.state.LocalStorageProvider();
-		}else{
+		} else {
 			stateProvider = new Ext.state.CookieProvider();
 		}
 
-	 	Ext.state.Manager.setProvider(stateProvider);
+		Ext.state.Manager.setProvider(stateProvider);
 	}
 
 	function createViewPort() {
@@ -73,10 +73,16 @@ Wcfe.App = function() {
 			layout : 'border',
 			stateful : true,
 			items : [ {
+				xtype: "panel",
+				region : "north",
+				height: 100,
+				items : [{	xtype : XType.breadcrumb}]
+			
+			}, {
 				region : 'east',
-				stateId: 'eastPanel',
-				split: true,
-				collapsible: true,
+				stateId : 'eastPanel',
+				split : true,
+				collapsible : true,
 				width : 300,
 				xtype : XType.panel,
 			}, content ]
@@ -87,7 +93,7 @@ Wcfe.App = function() {
 
 	function createContent() {
 		var clientForm = Ext.create({}, "clientform");
-	
+
 		return Ext.create({
 			region : 'center',
 			items : [ clientForm ]

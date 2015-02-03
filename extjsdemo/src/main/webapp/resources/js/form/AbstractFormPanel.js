@@ -17,11 +17,12 @@ Wcfe.form.AbstractFormPanel = Ext.extend(Ext.form.FormPanel, {
 	 * Init state events
 	 */
 	initStateEvents : function() {
-		Wcfe.form.AbstractFormPanel.superclass.initStateEvents.call(this);
-		this.mon(this, 'onsave', this.saveState, this);
-		this.mon(this, 'onreset', this.saveState, this);
-
 		var me = this;
+		
+		Wcfe.form.AbstractFormPanel.superclass.initStateEvents.call(me);
+		me.mon(me, 'onsave', me.saveState, me);
+		me.mon(me, 'onreset', me.saveState, me);
+
 		this.iterateOwnItems(function(item) {
 			item.mon(item, 'change', me.saveState, me);
 			item.mon(item, 'change', me.onChange, me);

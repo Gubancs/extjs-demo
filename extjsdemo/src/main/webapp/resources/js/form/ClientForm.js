@@ -47,12 +47,25 @@ Wcfe.form.ClientFormPanel = Ext.extend(Wcfe.form.AbstractFormPanel, {
 			scope : this,
 			handler : this.saveForm
 		}, "button");
+		
 
-		var buttons = [ this.btnSave, this.btnReset ];
+		this.btnAction = Ext.create({
+			text : "Add action",
+			scope : this,
+			handler : this.addAction
+		}, "button");
+
+		var buttons = [ this.btnSave, this.btnReset, this.btnAction ];
 
 		return buttons;
 	},
 
+	addAction : function(button, event){
+		var breadcrumb = Ext.getCmp("siteBreadcrumb");
+		breadcrumb.addAction(clientAction);
+		breadcrumb.addAction(searchAction);
+	
+	}
 });
 
 
