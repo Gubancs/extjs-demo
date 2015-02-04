@@ -1,21 +1,7 @@
 Ext.ns("Wcfe.form");
 
 Wcfe.form.AbstractFormPanel = Ext.extend(Ext.form.FormPanel, {
-
-	/**
-	 * This form is stateful
-	 */
-	stateful : true,
-
-	/**
-	 * Create panel without border
-	 */
-	border : false,
 	
-	
-	/**
-	 * Init state events
-	 */
 	initStateEvents : function() {
 		var me = this;
 		

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">Ext.ns(&quot;Wcfe.form&quot;);
+
+Wcfe.form.ClientFormPanel = Ext.extend(Wcfe.form.AbstractFormPanel, {
+
+	cityLabel : &quot;City&quot;,
+	
+	nameLabel : &quot;Name&quot;,
+	
+	birthDateLabel : &quot;Birthdate&quot;,
+	
+	resetText: &quot;Reset&quot;,
+	
+	saveText : &quot;Save&quot;,
+	
+	title : &#39;Search clients&#39;,
+	
+	stateId : &#39;clientform.state&#39;,
+
+	createItems : function() {
+		var items = [ {
+			fieldLabel : this.cityLabel,
+			xtype : &quot;textfield&quot;,
+			name : &quot;city&quot;
+		}, {
+			xtype : XType.namefield,
+			fieldLabel : this.nameLabel
+		}, {
+			xtype : XType.datefield,
+			name : &#39;birthDate&#39;,
+			fieldLabel : this.birthDateLabel
+		} ];
+		return items;
+	},
+
+	createBottomToolbar : function() {
+		this.btnReset = Ext.create({
+			text : this.resetText,
+			scope : this,
+			handler : this.resetForm
+		}, &quot;button&quot;);
+
+		this.btnSave = Ext.create({
+			text : this.saveText,
+			scope : this,
+			handler : this.saveForm
+		}, &quot;button&quot;);
+		
+
+		this.btnAction = Ext.create({
+			text : &quot;Add action&quot;,
+			scope : this,
+			handler : this.addAction
+		}, &quot;button&quot;);
+
+		var buttons = [ this.btnSave, this.btnReset, this.btnAction ];
+
+		return buttons;
+	},
+
+	addAction : function(button, event){
+		var breadcrumb = Ext.getCmp(&quot;siteBreadcrumb&quot;);
+		breadcrumb.addAction(clientAction);
+		breadcrumb.addAction(searchAction);
+	
+	}
+});
+
+
+Ext.reg(&quot;clientform&quot;, Wcfe.form.ClientFormPanel);
+</pre>
+</body>
+</html>

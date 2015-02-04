@@ -14,9 +14,6 @@ Wcfe.form.ClientFormPanel = Ext.extend(Wcfe.form.AbstractFormPanel, {
 	
 	title : 'Search clients',
 	
-	/**
-	 * The state id of client form
-	 */
 	stateId : 'clientform.state',
 
 	createItems : function() {

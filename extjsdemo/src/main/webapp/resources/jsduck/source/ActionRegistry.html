@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='ActionRegistry'>/**
+</span> * This is a singleton class
+ * 
+ *  
+ *  Register an action
+ * &lt;pre&gt;
+ * 	&lt;code&gt;
+ * 		var action = new Ext.Action({
+ * 			text : &quot;Search clients&quot;,
+ * 			itemId : &quot;searchAction&quot;,
+ * 			handler : function(){
+ * 				//TODO implement action handler
+ * 			}
+ * 		});
+ * 
+ * 		ActionRegistry.reg(action);
+ *  &lt;/code&gt;
+ * &lt;/pre&gt;
+ *   Get the action by actionId
+ * &lt;pre&gt;
+ * 	&lt;code&gt;
+ * 		var action = ActionRegistry.getAction(&quot;searchAction&quot;);
+ *  &lt;/code&gt;
+ * &lt;/pre&gt;
+ * 
+ * @author Gabor Kokeny
+ * @class ActionRegistry
+ */
+ActionRegistry = function() {
+
+<span id='ActionRegistry-property-actions'>	/**
+</span>	 * Registered actions
+	 */
+	var actions = {};
+
+	var get = function(actionId) {
+		return actions[actionId];
+	};
+
+	var put = function(actionId, action) {
+		actions[actionId] = action;
+	};
+
+	var remove = function(acitonId) {
+		delete actions[actionId];
+	};
+
+	return {
+		
+<span id='ActionRegistry-method-getAction'>		/**
+</span>		 * Get action by actionId
+		 * 
+		 * @param actionId The id of the action
+		 * @return Return the registered action
+		 */
+		getAction : function(actionId) {
+			if (actionId == null) {
+				throw &quot;Method parameter &#39;actionId&#39; cannot be null&quot;;
+			}
+
+			var action = get(actionId);
+
+			if (!Ext.isDefined(action) || action == null) {
+				throw &quot;There is no action with actionId &quot; + actionId;
+			}
+
+			return action;
+		},
+		
+<span id='ActionRegistry-method-reg'>		/**
+</span>		 * Register an action
+		 * 
+		 * @param action The action object
+		 */
+		reg : function(action) {
+			put(action.itemId, action);
+			console.debug(&quot;Action %s has been registered &quot;, action.itemId);
+		},
+
+<span id='ActionRegistry-method-unreg'>		/**
+</span>		 * Unregister an action by actionId;
+		 * 
+		 * @param {string} actionId The id of the action
+		 */
+		unreg : function(actionId) {
+			remove(actionId);
+			console.debug(&quot;Action %s has been unregistered &quot;, actionId);
+		}
+	}
+}();
+</pre>
+</body>
+</html>

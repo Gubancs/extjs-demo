@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id=''>/**
+</span> * Client form panel hungarian translation
+ */
+Ext.override(Wcfe.form.ClientFormPanel, {
+<span id='-property-cityLabel'>	cityLabel : &quot;Város&quot;,
+</span><span id='-property-nameLabel'>	nameLabel : &quot;Név&quot;,
+</span><span id='-property-birthDateLabel'>	birthDateLabel : &quot;Születési dátum&quot;,
+</span><span id='-property-resetText'>	resetText : &quot;Törlés&quot;,
+</span><span id='-property-saveText'>	saveText : &quot;Mentés&quot;,
+</span><span id='-property-title'>	title : &#39;Ügyfelek keresése&#39;
+</span>});
+<span id=''>/**
+</span> * NameField hungarian translation
+ */
+Ext.override(Wcfe.field.NameField, {
+<span id='-property-firstNameText'>	firstNameText : &quot;Keresztnév&quot;,
+</span><span id='-property-lastNameText'>	lastNameText : &quot;Vezetéknév&quot;,
+</span>});
+
+<span id=''>/**
+</span> * Temporaly solution
+ */
+Ext.override(Ext.form.BasicForm, {
+
+<span id='-property-nestedSeparator'>	nestedSeparator : &#39;.&#39;,
+</span>
+<span id='-method-doSetValues'>	doSetValues : function(values, form, parentId) {
+</span>		var field, id, value;
+		for (id in values) {
+			value = values[id];
+			id = Ext.isDefined(parentId) ? parentId + this.nestedSeparator + id
+					: id;
+
+			if (Ext.isObject(value)) {
+				form.doSetValues(value, form, id);
+			}
+
+			field = this.findField(id);
+
+			if (!Ext.isFunction(value) &amp;&amp; field) {
+				field.setValue(value);
+				console.debug(&quot;Set field value: &quot;, id, values, value);
+				if (this.trackResetOnLoad) {
+					field.originalValue = field.getValue();
+				}
+			}
+		}
+	},
+
+<span id='-method-setValues'>	setValues : function(values) {
+</span>		if (Ext.isArray(values)) {
+			for (var i = 0, len = values.length; i &lt; len; i++) {
+				var v = values[i];
+				this.doSetValues(v, this);
+			}
+		} else { // object hash
+			this.doSetValues(values, this);
+		}
+		return this;
+	},
+
+});</pre>
+</body>
+</html>

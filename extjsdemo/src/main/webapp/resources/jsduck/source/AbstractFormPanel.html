@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">Ext.ns(&quot;Wcfe.form&quot;);
+
+Wcfe.form.AbstractFormPanel = Ext.extend(Ext.form.FormPanel, {
+	
+	initStateEvents : function() {
+		var me = this;
+		
+		Wcfe.form.AbstractFormPanel.superclass.initStateEvents.call(me);
+		me.mon(me, &#39;onsave&#39;, me.saveState, me);
+		me.mon(me, &#39;onreset&#39;, me.saveState, me);
+
+		this.iterateOwnItems(function(item) {
+			item.mon(item, &#39;change&#39;, me.saveState, me);
+			item.mon(item, &#39;change&#39;, me.onChange, me);
+		});
+	},
+
+	iterateOwnItems : function(callback) {
+		if (!Ext.isDefined(callback) || callback == null) {
+			throw &quot;Callback function cannot be null or undifined&quot;;
+		}
+
+		if (!this.items || !this.items.length) {
+			return;
+		}
+
+		var iter = function(items) {
+			items.each(function(item) {
+				if (item.isComposite) {
+					iter(item.items);
+				}
+				callback(item);
+			});
+		}
+		iter(this.items);
+	},
+
+	initComponent : function() {
+		var config = {};
+
+		config.items = this.createItems();
+		config.bbar = this.createBottomToolbar();
+
+		config = Ext.apply(this.initialConfig, config);
+
+		Ext.apply(this, config);
+
+		Wcfe.form.AbstractFormPanel.superclass.initComponent.call(this);
+	},
+
+	createItems : function() {
+		return [];
+	},
+
+	createBottomToolbar : function() {
+		return [];
+	},
+
+	onChange : function() {
+		console.debug(&quot;Form fields has been changed&quot;);
+	},
+
+	resetForm : function() {
+		console.debug(&quot;Reset form values&quot;);
+
+		this.iterateOwnItems(function(item) {
+			item.setValue(null);
+		});
+
+		this.fireEvent(&#39;onreset&#39;);
+	},
+
+	saveForm : function() {
+		console.debug(&quot;Save client form&quot;);
+
+		var me = this;
+
+		me.fireEvent(&#39;onsave&#39;);
+		this.getForm().submit({
+			clientValidation : true,
+			submitEmptyText : false,
+			success : me.onSaveSuccess,
+			failure : me.onSaveFailure,
+			waitTitle : &quot;Please wait&quot;,
+			waitMsg : &quot;Please wait, save in progress&quot;
+		});
+	},
+
+	onSaveSuccess : function() {
+		console.debug(&quot;Save success&quot;);
+	},
+
+	onSaveFailure : function() {
+		console.debug(&quot;Save failed&quot;);
+	},
+
+	applyState : function(state) {
+		console.debug(&quot;Apply %O state to ClientForm&quot;, state);
+		this.getForm().setValues(state.formValues);
+		
+		Wcfe.form.AbstractFormPanel.superclass.applyState.call(state);
+	},
+
+	getState : function() {
+		console.log(&quot;state&quot;, this);
+		var state = {
+			formValues : this.getForm().getValues(),
+			width : this.getWidth(),
+			height : this.getHeight()
+		};
+		return state;
+	},
+});
+</pre>
+</body>
+</html>

@@ -1,14 +1,26 @@
 Ext.ns("Wcfe.field");
 
+/**
+ * This is a composite field
+ * 
+ * @author Gabor Kokeny
+ * @xtype namefield
+ */
 Wcfe.field.NameField = Ext.extend(Ext.form.CompositeField, {
-
+	
 	/**
-	 * Default empty text to firstName field
+	 * @cfg {String} firstNameText
+	 * Defaults to :  'Firstname'
+	 * 
+	 * Set the empty text of first name field
 	 */
 	firstNameText : "Firstname",
 
 	/**
-	 * Default empty text to lastName field
+	 * @cfg {String} lastNameText
+	 * Defaults to :  'Lastname'
+	 * 
+	 * Set the empty text of last name field
 	 */
 	lastNameText : "Lastname",
 
@@ -23,6 +35,11 @@ Wcfe.field.NameField = Ext.extend(Ext.form.CompositeField, {
 		Wcfe.field.NameField.superclass.initComponent.call(this);
 	},
 
+	/**
+	 * Create own items
+	 * 
+	 * @private
+	 */
 	createItems : function() {
 		var items = [ {
 			xtype : XType.textfield,

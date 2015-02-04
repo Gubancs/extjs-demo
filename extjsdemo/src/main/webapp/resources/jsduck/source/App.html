@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">Ext.ns(&quot;Wcfe&quot;);
+
+XType = {
+	textfield : &quot;textfield&quot;,
+	button : &quot;button&quot;,
+	window : &quot;window&quot;,
+	panel : &quot;panel&quot;,
+	viewport : &quot;viewport&quot;,
+	clientform : &quot;clientform&quot;,
+	breadcrumb : &quot;breadcrumb&quot;,
+	datefield : &quot;datefield&quot;,
+	namefield : &quot;namefield&quot;
+};
+
+Wcfe = {
+
+	supportsLocalStorage : function() {
+		try {
+			return &#39;localStorage&#39; in window &amp;&amp; window[&#39;localStorage&#39;] !== null;
+		} catch (e) {
+			return false;
+		}
+	}
+};
+
+<span id='Wcfe-App'>/**
+</span> * 
+ * This is a singleton class and can&#39;t be create directly
+ * 
+ * Use the init(); for create a new instance
+ * 
+ * @author kokeny
+ */
+Wcfe.App = function() {
+
+<span id='Wcfe-App-property-version'>	/**
+</span>	 * Current version
+	 */
+	var version = &quot;1.0&quot;;
+
+<span id='Wcfe-App-property-name'>	/**
+</span>	 * Name of the application
+	 */
+	var name = &quot;WCFE&quot;;
+
+<span id='Wcfe-App-method-initUI'>	/**
+</span>	 * Init user interface
+	 */
+	function initUI() {
+		console.debug(&quot;Init application user interface&quot;);
+
+		createViewPort();
+	}
+
+	function initStateProvider() {
+		var stateProvider = null;
+		if (Wcfe.supportsLocalStorage()) {
+			stateProvider = new Wcfe.state.LocalStorageProvider();
+		} else {
+			stateProvider = new Ext.state.CookieProvider();
+		}
+
+		Ext.state.Manager.setProvider(stateProvider);
+	}
+
+	function createViewPort() {
+		var content = createContent();
+
+		var viewPort = Ext.create({
+			layout : &#39;border&#39;,
+			stateful : true,
+			items : [ {
+				xtype: &quot;panel&quot;,
+				region : &quot;north&quot;,
+				height: 100,
+				items : [{	xtype : XType.breadcrumb}]
+			
+			}, {
+				region : &#39;east&#39;,
+				stateId : &#39;eastPanel&#39;,
+				split : true,
+				collapsible : true,
+				width : 300,
+				xtype : XType.panel,
+			}, content ]
+		}, XType.viewport);
+
+		return viewPort;
+	}
+
+	function createContent() {
+		var clientForm = Ext.create({}, &quot;clientform&quot;);
+
+		return Ext.create({
+			region : &#39;center&#39;,
+			items : [ clientForm ]
+		}, XType.panel);
+	}
+
+	return {
+
+<span id='Wcfe-App-method-getInstance'>		/**
+</span>		 * 
+		 * @returns Return instance of the application
+		 */
+		getInstance : function() {
+			return this;
+		},
+
+<span id='Wcfe-App-method-init'>		/**
+</span>		 * 
+		 * @returns Return instance of the application
+		 */
+		init : function() {
+			initStateProvider();
+			initUI();
+
+			return this.getInstance();
+		},
+
+<span id='Wcfe-App-method-getVersion'>		/**
+</span>		 * 
+		 * 
+		 * @returns Return version of the application
+		 */
+		getVersion : function() {
+			return version;
+		},
+
+<span id='Wcfe-App-method-getName'>		/**
+</span>		 * 
+		 * @returns Return name of the application
+		 */
+		getName : function() {
+			return name;
+		}
+	}
+}();</pre>
+</body>
+</html>

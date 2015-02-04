@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">Ext.ns(&quot;Wcfe.state&quot;);
+
+<span id='Wcfe-state-LocalStorageProvider'>/**
+</span> * @class Wcfe.state.LocalStorageProvider
+ * @extend Ext.state.Provider
+ * 
+ * Custom state provider implementation. LocalStorageProvider use the HTML5
+ * localstorage for save state of objects.
+ * 
+ * How to use this Provider:
+ * 
+ * &lt;pre&gt;
+ * &lt;code&gt;
+ * var stateProvider = new Wcfe.state.LocalStorageProvider();
+ * Ext.state.Manager.setProvider(stateProvider);
+ * &lt;/code&gt;
+ * &lt;/pre&gt;
+ * 
+ * @author Gabor Kokeny
+ */
+Wcfe.state.LocalStorageProvider = Ext
+		.extend(
+				Ext.state.Provider,
+				{
+
+<span id='Wcfe-state-LocalStorageProvider-method-constructor'>					/**
+</span>					 * 
+					 * Default constructor we can use this for create a new
+					 * instance of LocalStorageProvider
+					 * 
+					 * @throws {String}
+					 *             Throw an exception when the HTML5
+					 *             localStorage is not supported
+					 */
+					constructor : function() {
+						if (!Wcfe.supportsLocalStorage()) {
+							throw &quot;Couldn&#39;t initialize LocalStorageProvider because your browser is not supports the HTML5 localStorage&quot;;
+						}
+
+						Wcfe.state.LocalStorageProvider.superclass.constructor
+								.call(this);
+
+						// Delete unused variable
+						delete this.state;
+
+						console.debug(&quot;LocalStorageProvider initialized&quot;, this);
+					},
+
+<span id='Wcfe-state-LocalStorageProvider-method-get'>					/**
+</span>					 * 
+					 * @param key
+					 *            The key of state
+					 * @param defaultValue
+					 *            The defaultValue
+					 * 
+					 * @returns If localStorage contains key then return the
+					 *          current value else return the defaultValue
+					 */
+					get : function(key, defaultValue) {
+						var value = localStorage.getItem(key);
+
+						if (value == null) {
+							console
+									.warn(
+											&quot;There is no value in localstorage with key&quot;,
+											key);
+							return defaultValue;
+						}
+
+						value = this.decodeValue(value);
+
+						console.debug(&quot;LocalStorageProvider - get state of &#39;&quot;
+								+ key + &quot;&#39;&quot;, value);
+
+						return value;
+					},
+
+<span id='Wcfe-state-LocalStorageProvider-method-set'>					/**
+</span>					 * Set value in localStorage
+					 * 
+					 * @param name
+					 *            The key of state
+					 * @param value
+					 *            The current valu e of state
+					 */
+					set : function(key, value) {
+						if (typeof value == &#39;undefined&#39; || value === null) {
+							this.clear(key);
+							return;
+						}
+						console.debug(&quot;LocalStorageProvider - set state of &#39;&quot;
+								+ key + &quot;&#39;&quot;, value);
+
+						localStorage.setItem(key, this.encodeValue(value));
+
+						this.fireEvent(&quot;statechange&quot;, this, key, null);
+					},
+
+<span id='Wcfe-state-LocalStorageProvider-method-clear'>					/**
+</span>					 * Remove item from the localeStorage by a key
+					 * 
+					 * @param name
+					 *            The key of state
+					 */
+					clear : function(key) {
+						console.debug(&quot;LocalStorageProvider - clear state of &#39;&quot;
+								+ key + &quot;&#39;&quot;);
+
+						localStorage.removeItem(key);
+
+						this.fireEvent(&quot;statechange&quot;, this, key, value);
+					}
+
+				});</pre>
+</body>
+</html>

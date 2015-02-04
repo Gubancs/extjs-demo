@@ -13,10 +13,7 @@ XType = {
 };
 
 Wcfe = {
-	/**
-	 * 
-	 * @returns Return true if local storage is supported by browser.
-	 */
+
 	supportsLocalStorage : function() {
 		try {
 			return 'localStorage' in window && window['localStorage'] !== null;

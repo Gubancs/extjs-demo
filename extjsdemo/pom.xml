@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>hu.mortoff</groupId>
-	<artifactId>extjsdemo</artifactId>
+	<artifactId>extjs-demo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>extjs-demo-application</name>
@@ -16,6 +16,7 @@
 				<configuration>
 					<source>1.7</source>
 					<target>1.7</target>
+					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -41,6 +42,39 @@
 					<wroManagerFactory>ro.isdc.wro.maven.plugin.manager.factory.ConfigurableWroManagerFactory</wroManagerFactory>
 				</configuration>
 			</plugin>
+
+			<plugin>
+				<groupId>com.phasebash.jsdoc</groupId>
+				<artifactId>jsdoc3-maven-plugin</artifactId>
+				<version>1.1.0</version>
+				<configuration>
+					<recursive>true</recursive>
+					<lenient>true</lenient>
+					<outputDirectory>${basedir}/src/main/webapp/resources/jsdoc</outputDirectory>
+					<directoryRoots>
+						<directoryRoot>${basedir}/src/main/webapp/resources/js</directoryRoot>
+					</directoryRoots>
+				</configuration>
+			</plugin>
+			
+<!-- 			<plugin> -->
+<!-- 				<groupId>nl.secondfloor.mojo.jsduck</groupId> -->
+<!-- 				<artifactId>jsduck-maven-plugin</artifactId> -->
+<!-- 				<executions> -->
+<!-- 					<execution> -->
+<!-- 						<phase>generate-resources</phase> -->
+<!-- 						<goals> -->
+<!-- 							<goal>clean-jsduck</goal> -->
+<!-- 						</goals> -->
+<!-- 					</execution> -->
+<!-- 				</executions> -->
+<!-- 				<configuration> -->
+<!-- 					<source>${basedir}/src/main/webapp/resources/js</source> -->
+<!-- 					<targetDirectory>${basedir}/src/main/webapp/resources/jsduck</targetDirectory> -->
+<!-- 					<verbose>false</verbose> -->
+<!-- 				</configuration> -->
+<!-- 			</plugin> -->
 		</plugins>
+
 	</build>
 </project>
