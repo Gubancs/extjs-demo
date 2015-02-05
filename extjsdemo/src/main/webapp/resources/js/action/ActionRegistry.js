@@ -1,30 +1,34 @@
 /**
  * This is a singleton class
  * 
- *  
- *  Register an action
- * <pre>
- * 	<code>
- * 		var action = new Ext.Action({
- * 			text : "Search clients",
- * 			itemId : "searchAction",
- * 			handler : function(){
- * 				//TODO implement action handler
- * 			}
- * 		});
  * 
- * 		ActionRegistry.reg(action);
- *  </code>
- * </pre>
- *   Get the action by actionId
+ * Register an action
+ * 
  * <pre>
  * 	<code>
- * 		var action = ActionRegistry.getAction("searchAction");
- *  </code>
+ * var action = new Ext.Action({
+ * 	text : &quot;Search clients&quot;,
+ * 	itemId : &quot;searchAction&quot;,
+ * 	handler : function() {
+ * 		//TODO implement action handler
+ * 	}
+ * });
+ * 
+ * ActionRegistry.reg(action);
+ * </code>
+ * </pre>
+ * 
+ * Get the action by actionId
+ * 
+ * <pre>
+ * 	<code>
+ * var action = ActionRegistry.getAction(&quot;searchAction&quot;);
+ * </code>
  * </pre>
  * 
  * @author Gabor Kokeny
  * @class ActionRegistry
+ * @singleton
  */
 ActionRegistry = function() {
 
@@ -33,24 +37,25 @@ ActionRegistry = function() {
 	 */
 	var actions = {};
 
-	var get = function(actionId) {
+	function get(actionId) {
 		return actions[actionId];
-	};
+	}
 
-	var put = function(actionId, action) {
+	function put(actionId, action) {
 		actions[actionId] = action;
-	};
+	}
 
-	var remove = function(acitonId) {
+	function remove(acitonId) {
 		delete actions[actionId];
-	};
+	}
 
 	return {
-		
+
 		/**
 		 * Get action by actionId
 		 * 
-		 * @param actionId The id of the action
+		 * @param actionId
+		 *            The id of the action
 		 * @return Return the registered action
 		 */
 		getAction : function(actionId) {
@@ -66,11 +71,12 @@ ActionRegistry = function() {
 
 			return action;
 		},
-		
+
 		/**
 		 * Register an action
 		 * 
-		 * @param action The action object
+		 * @param action
+		 *            The action object
 		 */
 		reg : function(action) {
 			put(action.itemId, action);
@@ -80,11 +86,12 @@ ActionRegistry = function() {
 		/**
 		 * Unregister an action by actionId;
 		 * 
-		 * @param {string} actionId The id of the action
+		 * @param {string}
+		 *            actionId The id of the action
 		 */
 		unreg : function(actionId) {
 			remove(actionId);
 			console.debug("Action %s has been unregistered ", actionId);
 		}
-	}
+	};
 }();

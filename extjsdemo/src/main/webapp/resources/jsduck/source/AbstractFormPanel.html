@@ -18,10 +18,10 @@
   <pre class="prettyprint lang-js">Ext.ns(&quot;Wcfe.form&quot;);
 
 Wcfe.form.AbstractFormPanel = Ext.extend(Ext.form.FormPanel, {
-	
+
 	initStateEvents : function() {
 		var me = this;
-		
+
 		Wcfe.form.AbstractFormPanel.superclass.initStateEvents.call(me);
 		me.mon(me, &#39;onsave&#39;, me.saveState, me);
 		me.mon(me, &#39;onreset&#39;, me.saveState, me);
@@ -30,26 +30,6 @@ Wcfe.form.AbstractFormPanel = Ext.extend(Ext.form.FormPanel, {
 			item.mon(item, &#39;change&#39;, me.saveState, me);
 			item.mon(item, &#39;change&#39;, me.onChange, me);
 		});
-	},
-
-	iterateOwnItems : function(callback) {
-		if (!Ext.isDefined(callback) || callback == null) {
-			throw &quot;Callback function cannot be null or undifined&quot;;
-		}
-
-		if (!this.items || !this.items.length) {
-			return;
-		}
-
-		var iter = function(items) {
-			items.each(function(item) {
-				if (item.isComposite) {
-					iter(item.items);
-				}
-				callback(item);
-			});
-		}
-		iter(this.items);
 	},
 
 	initComponent : function() {
@@ -63,6 +43,19 @@ Wcfe.form.AbstractFormPanel = Ext.extend(Ext.form.FormPanel, {
 		Ext.apply(this, config);
 
 		Wcfe.form.AbstractFormPanel.superclass.initComponent.call(this);
+
+	},
+
+	afterRender : function() {
+		Wcfe.form.AbstractFormPanel.superclass.afterRender.call(this);
+
+		this.initKeyListeners();
+	},
+
+	initKeyListeners : function() {
+		this.addKeyNav({
+			&quot;enter&quot; : this.saveForm
+		});
 	},
 
 	createItems : function() {
@@ -114,7 +107,7 @@ Wcfe.form.AbstractFormPanel = Ext.extend(Ext.form.FormPanel, {
 	applyState : function(state) {
 		console.debug(&quot;Apply %O state to ClientForm&quot;, state);
 		this.getForm().setValues(state.formValues);
-		
+
 		Wcfe.form.AbstractFormPanel.superclass.applyState.call(state);
 	},
 

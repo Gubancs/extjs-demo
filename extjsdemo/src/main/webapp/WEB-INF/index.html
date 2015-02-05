@@ -5,22 +5,30 @@
 
 <link rel="stylesheet" type="text/css"
 	href="../resources/plugins/extjs/css/ext-all.css" />
-	
-	
-	
+
+
+
 <script type="text/javascript"
-	src="../resources/plugins/extjs/js/ext-base.js" ></script>
-	
+	src="../resources/plugins/extjs/js/ext-base.js"></script>
+
 <script type="text/javascript"
-	src="../resources/plugins/extjs/js/ext-all-debug.js" ></script>
-	
-	
+	src="../resources/plugins/extjs/js/ext-all-debug.js"></script>
+
+
 <title>ExtJS 3.4 advanced</title>
 </head>
 <body>
-	
+
+	<!-- Fields required for history management -->
+	<form id="history-form" class="x-hidden">
+		<input type="hidden" id="x-history-field" />
+		<iframe id="x-history-frame"></iframe>
+	</form>
+
+
 	<!-- App javascript -->
-	<script type="text/javascript" src="../resources/minified/js/wcfe.min.js"></script>
+	<script type="text/javascript"
+		src="../resources/minified/js/wcfe.min.js"></script>
 
 </body>
 </html>

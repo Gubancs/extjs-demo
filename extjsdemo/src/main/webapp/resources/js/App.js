@@ -24,12 +24,11 @@ Wcfe = {
 };
 
 /**
- * 
- * This is a singleton class and can't be create directly
- * 
- * Use the init(); for create a new instance
+ * This is a singleton class and can't be create directly Use the init(); for
+ * create a new instance
  * 
  * @author kokeny
+ * @singleton
  */
 Wcfe.App = function() {
 
@@ -60,21 +59,21 @@ Wcfe.App = function() {
 			stateProvider = new Ext.state.CookieProvider();
 		}
 
-		Ext.state.Manager.setProvider(stateProvider);
+		StateManager.setProvider(stateProvider);
 	}
 
 	function createViewPort() {
-		var content = createContent();
-
 		var viewPort = Ext.create({
 			layout : 'border',
 			stateful : true,
 			items : [ {
-				xtype: "panel",
+				xtype : "panel",
 				region : "north",
-				height: 100,
-				items : [{	xtype : XType.breadcrumb}]
-			
+				height : 100,
+				items : [ {
+					xtype : XType.breadcrumb
+				} ]
+
 			}, {
 				region : 'east',
 				stateId : 'eastPanel',
@@ -82,25 +81,22 @@ Wcfe.App = function() {
 				collapsible : true,
 				width : 300,
 				xtype : XType.panel,
-			}, content ]
+			}, Wcfe.Page ]
 		}, XType.viewport);
+
+		var clientForm = Ext.create({}, "clientform");
+		Wcfe.Page.setContent(clientForm);
 
 		return viewPort;
 	}
 
-	function createContent() {
-		var clientForm = Ext.create({}, "clientform");
-
-		return Ext.create({
-			region : 'center',
-			items : [ clientForm ]
-		}, XType.panel);
+	function historyInitialized(History) {
+		console.info("History successfully intialized");
 	}
 
 	return {
 
 		/**
-		 * 
 		 * @returns Return instance of the application
 		 */
 		getInstance : function() {
@@ -108,10 +104,10 @@ Wcfe.App = function() {
 		},
 
 		/**
-		 * 
 		 * @returns Return instance of the application
 		 */
 		init : function() {
+			History.init(historyInitialized, this);
 			initStateProvider();
 			initUI();
 
@@ -119,8 +115,6 @@ Wcfe.App = function() {
 		},
 
 		/**
-		 * 
-		 * 
 		 * @returns Return version of the application
 		 */
 		getVersion : function() {
@@ -128,11 +122,12 @@ Wcfe.App = function() {
 		},
 
 		/**
-		 * 
 		 * @returns Return name of the application
 		 */
 		getName : function() {
 			return name;
 		}
-	}
+	};
 }();
+
+App = Wcfe.App;

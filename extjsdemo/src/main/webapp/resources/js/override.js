@@ -28,8 +28,7 @@ Ext.override(Ext.form.BasicForm, {
 		var field, id, value;
 		for (id in values) {
 			value = values[id];
-			id = Ext.isDefined(parentId) ? parentId + this.nestedSeparator + id
-					: id;
+			id = Ext.isDefined(parentId) ? parentId + this.nestedSeparator + id : id;
 
 			if (Ext.isObject(value)) {
 				form.doSetValues(value, form, id);
@@ -59,4 +58,27 @@ Ext.override(Ext.form.BasicForm, {
 		return this;
 	},
 
+});
+
+Ext.override(Ext.Container, {
+	iterateOwnItems : function(callback) {
+		if (!Ext.isDefined(callback) || callback == null) {
+			throw "Callback function cannot be null or undifined";
+		}
+
+		if (!this.items || !this.items.length) {
+			return;
+		}
+
+		var iter = function(items) {
+			items.each(function(item) {
+				if (item.isComposite) {
+					iter(item.items);
+				}
+				callback(item);
+			});
+		};
+
+		iter(this.items);
+	},
 });

@@ -67,7 +67,7 @@ Wcfe.component.Breadcrumb = Ext.extend(Ext.Panel, {
 		}
 		console.debug("Add an action to breadcrumb %O", action);
 
-		this.add(new Ext.Button(action))
+		this.add(new Ext.Button(action));
 
 		this.actions[action.itemId] = action;
 

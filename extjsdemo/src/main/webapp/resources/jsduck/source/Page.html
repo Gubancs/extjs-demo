@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='Wcfe-Page'>/**
+</span> * Center panel extend the Ext.Panel class We can use this class to manage
+ * center content of application.
+ * 
+ * @author Gabor Kokeny
+ * @singleton
+ */
+Wcfe.Page = Ext.extend(Ext.Panel, {
+
+<span id='Wcfe-Page-cfg-stateful'>	/**
+</span>	 * MainContainer is a statful object
+	 * 
+	 * @cfg stateful
+	 */
+	stateful : true,
+
+<span id='Wcfe-Page-cfg-stateId'>	/**
+</span>	 * @cfg stateId The unique state idendity of MainContainer
+	 */
+	stateId : &quot;mainContainer.state&quot;,
+
+<span id='Wcfe-Page-cfg-region'>	/**
+</span>	 * @cfg region
+	 */
+	region : &#39;center&#39;,
+
+<span id='Wcfe-Page-cfg-cls'>	/**
+</span>	 * @cfg cls
+	 */
+	cls : &#39;x-container&#39;,
+
+<span id='Wcfe-Page-cfg-border'>	/**
+</span>	 * @cfg border
+	 */
+	border : false,
+
+<span id='Wcfe-Page-cfg-frame'>	/**
+</span>	 * @cfg frame
+	 */
+	frame : false,
+
+<span id='Wcfe-Page-method-constructor'>	/**
+</span>	 * Create new instance of MainContainer
+	 * 
+	 * @protected
+	 */
+	constructor : function() {
+		Wcfe.Page.superclass.constructor.call(this);
+
+		this.addEvents(
+
+<span id='Wcfe-Page-event-changed'>		/**
+</span>		 * @event changed MainContainer fire this event after the content was
+		 *        changed
+		 * @param event
+		 *            The event object
+		 * @param content
+		 *            The new content
+		 */
+		&quot;changed&quot;);
+
+	},
+
+<span id='Wcfe-Page-method-initComponent'>	/**
+</span>	 * Initialize center content of application
+	 * 
+	 * @protected
+	 */
+	initComponent : function() {
+
+		var config = {};
+
+		config.items = this.createItems();
+
+		config = Ext.apply(this, config);
+
+		Wcfe.Page.superclass.initComponent.call(this);
+	},
+
+<span id='Wcfe-Page-method-initStateEvents'>	/**
+</span>	 * Initialize state events
+	 * 
+	 * @protected
+	 */
+	initStateEvents : function() {
+		this.mon(this, &#39;changed&#39;, this.saveState, this);
+	},
+
+<span id='Wcfe-Page-method-createItems'>	/**
+</span>	 * create own items
+	 * 
+	 * @protected
+	 */
+	createItems : function() {
+		return [];
+	},
+
+<span id='Wcfe-Page-method-setContent'>	/**
+</span>	 * Set the current content
+	 * 
+	 * @param content
+	 */
+	setContent : function(content) {
+		console.debug(&quot;set center content&quot;, content);
+
+		this.add(content);
+
+		this.doLayout(true, true);
+
+		this.fireEvent(&quot;changed&quot;, content);
+	},
+
+<span id='Wcfe-Page-method-applyState'>	/**
+</span>	 * Apply state
+	 * 
+	 * @param state
+	 *            The new state of the MainContainer
+	 * @protected
+	 */
+	applyState : function(state) {
+		console.debug(&quot;Apply state to MainContainer&quot;, state);
+	},
+
+<span id='Wcfe-Page-method-getState'>	/**
+</span>	 * Get current state of main container
+	 * 
+	 * @protected
+	 */
+	getState : function() {
+		var state = {};
+
+		return state;
+	},
+
+<span id='Wcfe-Page-method-onHistoryChange'>	/**
+</span>	 * This function executed when the History changed.
+	 * 
+	 * @param {String}
+	 *            token The history token
+	 */
+	onHistoryChange : function(token) {
+		console.debug(&quot;On history changed %O&quot;, token);
+		
+		if(token == &quot;dashboard&quot;){
+			console.log(&quot;Open dashboard&quot;);
+		}
+	}
+});
+
+// overwrite Wcfe.Page with static instance
+Wcfe.Page = new Wcfe.Page();
+Page = Wcfe.Page;
+</pre>
+</body>
+</html>

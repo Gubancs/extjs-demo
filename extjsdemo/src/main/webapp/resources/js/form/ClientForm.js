@@ -15,7 +15,9 @@ Wcfe.form.ClientFormPanel = Ext.extend(Wcfe.form.AbstractFormPanel, {
 	title : 'Search clients',
 	
 	stateId : 'clientform.state',
-
+	
+	border : false,
+	
 	createItems : function() {
 		var items = [ {
 			fieldLabel : this.cityLabel,
@@ -63,6 +65,7 @@ Wcfe.form.ClientFormPanel = Ext.extend(Wcfe.form.AbstractFormPanel, {
 		breadcrumb.addAction(searchAction);
 	
 	}
+	
 });
 
 

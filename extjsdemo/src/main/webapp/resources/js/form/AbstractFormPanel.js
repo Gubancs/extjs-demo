@@ -1,10 +1,10 @@
 Ext.ns("Wcfe.form");
 
 Wcfe.form.AbstractFormPanel = Ext.extend(Ext.form.FormPanel, {
-	
+
 	initStateEvents : function() {
 		var me = this;
-		
+
 		Wcfe.form.AbstractFormPanel.superclass.initStateEvents.call(me);
 		me.mon(me, 'onsave', me.saveState, me);
 		me.mon(me, 'onreset', me.saveState, me);
@@ -13,26 +13,6 @@ Wcfe.form.AbstractFormPanel = Ext.extend(Ext.form.FormPanel, {
 			item.mon(item, 'change', me.saveState, me);
 			item.mon(item, 'change', me.onChange, me);
 		});
-	},
-
-	iterateOwnItems : function(callback) {
-		if (!Ext.isDefined(callback) || callback == null) {
-			throw "Callback function cannot be null or undifined";
-		}
-
-		if (!this.items || !this.items.length) {
-			return;
-		}
-
-		var iter = function(items) {
-			items.each(function(item) {
-				if (item.isComposite) {
-					iter(item.items);
-				}
-				callback(item);
-			});
-		}
-		iter(this.items);
 	},
 
 	initComponent : function() {
@@ -46,6 +26,19 @@ Wcfe.form.AbstractFormPanel = Ext.extend(Ext.form.FormPanel, {
 		Ext.apply(this, config);
 
 		Wcfe.form.AbstractFormPanel.superclass.initComponent.call(this);
+
+	},
+
+	afterRender : function() {
+		Wcfe.form.AbstractFormPanel.superclass.afterRender.call(this);
+
+		this.initKeyListeners();
+	},
+
+	initKeyListeners : function() {
+		ComponentUtils.addKeyNav(this, {
+			"enter" : this.saveForm
+		});
 	},
 
 	createItems : function() {
@@ -97,7 +90,7 @@ Wcfe.form.AbstractFormPanel = Ext.extend(Ext.form.FormPanel, {
 	applyState : function(state) {
 		console.debug("Apply %O state to ClientForm", state);
 		this.getForm().setValues(state.formValues);
-		
+
 		Wcfe.form.AbstractFormPanel.superclass.applyState.call(state);
 	},
 

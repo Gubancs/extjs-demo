@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='Wcfe-component-Navbar'>/**
+</span> * The main navbar of application
+ * 
+ * 
+ * @author Gabor Kokeny
+ * @xtype navbar
+ * @class Wcfe.component.Navbar
+ */
+Wcfe.component.Navbar = Ext.extend(Ext.Panel, {
+
+<span id='Wcfe-component-Navbar-cfg-cls'>	/**
+</span>	 * @cfg cls
+	 * Custom style
+	 */
+	cls : &#39;x-navbar&#39;,
+
+<span id='Wcfe-component-Navbar-property-baseClass'>	baseClass : &#39;x-plain&#39;,
+</span>	
+<span id='Wcfe-component-Navbar-cfg-openedClass'>	/**
+</span>	 * The CSS class of navbar when it&#39;s state is opened
+	 * @cfg openedClass
+	 */
+	openedClass : &#39;x-navbar-open&#39;,
+
+<span id='Wcfe-component-Navbar-cfg-layout'>	/**
+</span>	 * @cfg layout
+	 * A navbaron a gombokat VerticalBox layout segítségével rendereljük
+	 */
+	layout : {
+		type : &#39;vbox&#39;,
+		align : &#39;center&#39;
+	},
+	
+	
+<span id='Wcfe-component-Navbar-property-defaults'>	defaults : {
+</span>		xtype : &#39;button&#39;
+	},
+
+<span id='Wcfe-component-Navbar-cfg-stateId'>	/**
+</span>	 * @cfg stateId
+	 * A menü egyedi state ID-ja
+	 */
+	stateId : &quot;navbarState&quot;,
+
+<span id='Wcfe-component-Navbar-cfg-openedWidth'>	/**
+</span>	 * @cfg openedWidth
+	 * A navbar széleségge nyitott állapotban
+	 */
+	openedWidth : 315,
+
+<span id='Wcfe-component-Navbar-cfg-initialWidth'>	/**
+</span>	 * @cfg initialWidth
+	 * A kezdeti szélesség
+	 */
+	initialWidth : 98,
+
+<span id='Wcfe-component-Navbar-cfg-width'>	/**
+</span>	 * @cfg width
+	 * Szélesség beállítása
+	 */
+	width : 98,
+
+<span id='Wcfe-component-Navbar-cfg-delay'>	/**
+</span>	 * @cfg delay
+	 * 
+	 * Default navbar delay
+	 */
+	delay : 300,
+
+<span id='Wcfe-component-Navbar-method-initComponent'>	/**
+</span>	 * Navbar initicalizálása
+	 * @param {Object} config
+	 * @private
+	 */
+	initComponent : function(config) {
+
+		var config = {};
+
+		this.createNavbarItems(config);
+
+		Ext.apply(this, Ext.apply(this.initialConfig, config));
+
+		Wcfe.component.Navbar.superclass.initComponent.call(this);
+
+	},
+
+<span id='Wcfe-component-Navbar-method-afterRender'>	/**
+</span>	 * Renderelés után beregisztárlunk két eseményfigyelőt
+	 * @private
+	 */
+	afterRender : function() {
+
+		Wcfe.component.Navbar.superclass.afterRender.call(this);
+
+		this.mon(this.getEl(), &#39;mouseenter&#39;, this.onMouseEnterEventHandler,
+				this);
+		this.mon(this.getEl(), &#39;mouseleave&#39;, this.onMouseLeaveEventHandler,
+				this);
+	},
+
+<span id='Wcfe-component-Navbar-method-onMouseEnterEventHandler'>	/**
+</span>	 * Meghívódik amikor az egérrel a menü fölé navigált a felhasználó
+	 * 
+	 * @param {Object} event
+	 * @private
+	 */
+	onMouseEnterEventHandler : function(event) {
+		console.debug(&quot;Mouse enter event&quot;);
+
+		var me = this;
+
+		if (me.opend) {
+			return;
+		}
+
+		me.mun(this.getEl(), &#39;mouseenter&#39;, me.onMouseEnterEventHandler, this);
+		console.debug(&quot;Unregister moseenter event listener&quot;);
+
+		me.open = setTimeout(function() {
+			me.openNavbar();
+		}, me.delay);
+
+	},
+<span id='Wcfe-component-Navbar-method-onMouseLeaveEventHandler'>	/**
+</span>	 * Meghívódik amikor a menüről elnavigált a felhasználó az egérrel
+	 * 
+	 * @param {Object} event
+	 * @private
+	 */
+	onMouseLeaveEventHandler : function(event) {
+		console.log(&quot;Mouse leave event&quot;);
+
+		clearTimeout(this.open);
+
+		this.mon(this.getEl(), &#39;mouseenter&#39;, this.onMouseEnterEventHandler,
+				this);
+		console.log(&quot;Register moseenter event listener&quot;);
+
+		this.closeNavbar();
+	},
+
+<span id='Wcfe-component-Navbar-method-openNavbar'>	/**
+</span>	 * Programatically open navbar
+	 */
+	openNavbar : function(	) {
+		var me = this;
+
+		this.addClass(this.openedClass);
+		this.getEl().scale(this.openedWidth, this.height, {
+			callback : function() {
+				me.opened = false;
+			}
+		});
+		var tab = Ext.getCmp(&quot;tabs&quot;);
+		tab.getEl().shift({
+			x : this.openedWidth
+		});
+		this.opened = true;
+	},
+
+<span id='Wcfe-component-Navbar-method-closeNavbar'>	/**
+</span>	 * Programatically close navbar
+	 * 
+	 */
+	closeNavbar : function() {
+		var me = this;
+
+		this.removeClass(this.openedClass);
+		this.getEl().scale(this.initialWidth, this.height, {
+			callback : function() {
+				me.opened = false;
+			}
+		});
+
+		var tab = Ext.getCmp(&quot;tabs&quot;);
+		tab.getEl().shift({
+			x : this.initialWidth
+		});
+	},
+
+<span id='Wcfe-component-Navbar-method-createNavbarItems'>	/**
+</span>	 * Create own items
+	 * 
+	 * @param {Object} config
+	 * @return Return the array of items
+	 * @private
+	 */
+	createNavbarItems : function() {
+		var items = [ {
+			tabTip : &#39;Ügyfél keresés&#39;,
+			text : &#39;Ügyfél keresés&#39;,
+			cls : &#39;icon_search&#39;,
+			scope : this,
+			handler : function(button, event) {
+				this.setActiveButton(button);
+				new WCFE.ClientSearchView().show();
+			}
+		}, {
+			tabTip : &#39;Engedélyadás&#39;,
+			text : &#39;Engedélyadás&#39;,
+			cls : &#39;icon_group&#39;,
+			scope : this,
+			handler : function(button, event) {
+				// this.setActiveButton(button);
+			}
+		}, {
+			text : &#39;CTR jegyzőkönyv&#39;,
+			cls : &#39;icon_cog&#39;,
+			scope : this,
+			handler : function(button, event) {
+				// this.setActiveButton(button);
+			}
+		}, {
+			text : &#39;CTI információk&#39;,
+			cls : &#39;icon_key&#39;,
+			scope : this,
+			handler : function(button, event) {
+				// this.setActiveButton(button);
+			}
+		}, {
+			text : &#39;Telefonos funkciók&#39;,
+			cls : &#39;icon_book&#39;,
+			scope : this,
+			handler : function(button, event) {
+				// this.setActiveButton(button);
+			}
+		}, {
+			text : &#39;Napló&#39;,
+			cls : &#39;icon_phone&#39;,
+			scope : this,
+			handler : function(button, event) {
+				this.setActiveButton(button);
+
+				new WCFE.AuditlogView().show();
+			}
+		} ];
+		
+		return items;
+	},
+
+<span id='Wcfe-component-Navbar-method-setActiveButton'>	/**
+</span>	 * Set the active button
+	 * 
+	 * @param {Object} button
+	 */
+	setActiveButton : function(button) {
+		this.closeNavbar();
+		if (this.activeMenu) {
+			this.activeMenu.removeClass(&quot;active&quot;);
+		}
+
+		this.activeMenu = button;
+		this.activeMenu.addClass(&quot;active&quot;);
+	}
+});
+
+
+Ext.reg(&quot;navbar&quot;, Wcfe.component.Navbar);
+</pre>
+</body>
+</html>

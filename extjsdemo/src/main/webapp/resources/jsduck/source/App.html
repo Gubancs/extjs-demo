@@ -41,12 +41,11 @@ Wcfe = {
 };
 
 <span id='Wcfe-App'>/**
-</span> * 
- * This is a singleton class and can&#39;t be create directly
- * 
- * Use the init(); for create a new instance
+</span> * This is a singleton class and can&#39;t be create directly Use the init(); for
+ * create a new instance
  * 
  * @author kokeny
+ * @singleton
  */
 Wcfe.App = function() {
 
@@ -77,21 +76,21 @@ Wcfe.App = function() {
 			stateProvider = new Ext.state.CookieProvider();
 		}
 
-		Ext.state.Manager.setProvider(stateProvider);
+		StateManager.setProvider(stateProvider);
 	}
 
 	function createViewPort() {
-		var content = createContent();
-
 		var viewPort = Ext.create({
 			layout : &#39;border&#39;,
 			stateful : true,
 			items : [ {
-				xtype: &quot;panel&quot;,
+				xtype : &quot;panel&quot;,
 				region : &quot;north&quot;,
-				height: 100,
-				items : [{	xtype : XType.breadcrumb}]
-			
+				height : 100,
+				items : [ {
+					xtype : XType.breadcrumb
+				} ]
+
 			}, {
 				region : &#39;east&#39;,
 				stateId : &#39;eastPanel&#39;,
@@ -99,36 +98,33 @@ Wcfe.App = function() {
 				collapsible : true,
 				width : 300,
 				xtype : XType.panel,
-			}, content ]
+			}, Wcfe.Page ]
 		}, XType.viewport);
+
+		var clientForm = Ext.create({}, &quot;clientform&quot;);
+		Wcfe.Page.setContent(clientForm);
 
 		return viewPort;
 	}
 
-	function createContent() {
-		var clientForm = Ext.create({}, &quot;clientform&quot;);
-
-		return Ext.create({
-			region : &#39;center&#39;,
-			items : [ clientForm ]
-		}, XType.panel);
+	function historyInitialized(History) {
+		console.info(&quot;History successfully intialized&quot;);
 	}
 
 	return {
 
 <span id='Wcfe-App-method-getInstance'>		/**
-</span>		 * 
-		 * @returns Return instance of the application
+</span>		 * @returns Return instance of the application
 		 */
 		getInstance : function() {
 			return this;
 		},
 
 <span id='Wcfe-App-method-init'>		/**
-</span>		 * 
-		 * @returns Return instance of the application
+</span>		 * @returns Return instance of the application
 		 */
 		init : function() {
+			History.init(historyInitialized, this);
 			initStateProvider();
 			initUI();
 
@@ -136,22 +132,21 @@ Wcfe.App = function() {
 		},
 
 <span id='Wcfe-App-method-getVersion'>		/**
-</span>		 * 
-		 * 
-		 * @returns Return version of the application
+</span>		 * @returns Return version of the application
 		 */
 		getVersion : function() {
 			return version;
 		},
 
 <span id='Wcfe-App-method-getName'>		/**
-</span>		 * 
-		 * @returns Return name of the application
+</span>		 * @returns Return name of the application
 		 */
 		getName : function() {
 			return name;
 		}
-	}
-}();</pre>
+	};
+}();
+
+App = Wcfe.App;</pre>
 </body>
 </html>
